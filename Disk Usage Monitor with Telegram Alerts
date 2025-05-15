@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+BOT_TOKEN="7879028010:AAF6wJDg-y4P4ahjC7ZfOj_KY_SqMwfScA0"
+CHAT_ID="1068508206"
+URL="https://api.telegram.org/bot$BOT_TOKEN/sendMessage"
+
+# بررسی مصرف دیسک
+df -h | awk 'NR>1 { if ($5+0 >= 90) print $0 }' | while read line
+do
+  # ارسال پیام به تلگرام
+  MESSAGE="🚨 مصرف هارد دیسک بالاتر از 90%: $line"
+  curl -s -X POST $URL -d "chat_id=$CHAT_ID" -d "text=$MESSAGE"
+done

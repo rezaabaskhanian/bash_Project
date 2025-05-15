@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# ⚙️ تنظیمات
+BACKUP_SOURCE="/home/ubuntu"
+BACKUP_DIR="/tmp"
+DATE=$(date +%F)
+FILENAME="backup-$DATE.tar.gz"
+FULL_PATH="$BACKUP_DIR/$FILENAME"
+
+# بکاپ گرفتن و فشرده‌سازی
+tar -czf $FULL_PATH $BACKUP_SOURCE
+
+# 🔗 اطلاعات تلگرام
+BOT_TOKEN="توکن_بات_خودت"
+CHAT_ID="آی‌دی_چت_خودت"
+URL="https://api.telegram.org/bot$BOT_TOKEN/sendDocument"
+
+# 📤 ارسال به تلگرام
+curl -s -X POST "$URL" -F chat_id="$CHAT_ID" -F document=@"$FULL_PATH"
